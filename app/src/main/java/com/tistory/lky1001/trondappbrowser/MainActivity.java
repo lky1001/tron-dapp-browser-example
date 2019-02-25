@@ -1,5 +1,6 @@
 package com.tistory.lky1001.trondappbrowser;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -23,5 +24,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.button)
     public void onSaveClick() {
         // todo - save preference
+        startActivity(new Intent(this, WebViewActivity.class));
     }
 }
