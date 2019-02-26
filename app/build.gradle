@@ -42,6 +42,12 @@ dependencies {
     implementation "com.android.support:support-v4:$appcompatVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+
+    implementation "com.fasterxml.jackson.core:jackson-core:2.9.8"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.9.8"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:2.9.8"
+
     // ui
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
 
