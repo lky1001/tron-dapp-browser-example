@@ -29,12 +29,13 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
 
+        customPreference = new CustomPreference(this);
+
         if (TextUtils.isEmpty(customPreference.getPk())) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
 
-        customPreference = new CustomPreference(this);
         keyStore = new KeyStoreApi23Impl(customPreference);
 
         keyStore.init();
@@ -50,7 +51,8 @@ public class WebViewActivity extends AppCompatActivity {
         //// Sets whether the DOM storage API is enabled.
         webView.getSettings().setDomStorageEnabled(true);
 
-        webView.loadUrl("http://localhost:3000");
+        // todo - your react web server ip
+        webView.loadUrl("http://192.168.0.2:3000");
 
         // Bridge instance
         webView.addJavascriptInterface(this, "tronWeb");
@@ -58,7 +60,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     @JavascriptInterface
     public String requestData() { // must be final
-        return keyStore.encryptString(customPreference.getPk(), CustomPreference.ALIAS_ADDRESS_KEY);
+        return keyStore.decryptString(customPreference.getPk(), CustomPreference.ALIAS_ADDRESS_KEY);
 
 //        handler.post(new Runnable() {
 //            public void run() {

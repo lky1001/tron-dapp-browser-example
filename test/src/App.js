@@ -9,39 +9,39 @@ const fullNode = new HttpProvider('https://api.trongrid.io') // Full node http e
 const solidityNode = new HttpProvider('https://api.trongrid.io') // Solidity node http endpoint
 const eventServer = new HttpProvider('https://api.trongrid.io') // Contract events http endpoint
 
-const privateKey = 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0'
-
-const tronWeb = new TronWeb(fullNode, solidityNode, eventServer, privateKey)
-
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      key: 'aaa'
+      tronWeb : null,
+      balance : -1,
     }
   }
 
   async componentDidMount() {
-    if (window.DiceWeb) {
-      //const result = window.DiceWeb.requestData()
-      // this.setState({
-      //   key: result
-      // })
+    let tronWeb;
+    let balance = -1;
+
+    if (window.tronWeb && window.tronWeb.requestData) {
+        tronWeb = new TronWeb(fullNode, solidityNode, eventServer, window.tronWeb.requestData())
+
+        const dd = tronWeb.defaultAddress;
+
+        console.log(dd.base58)
+
+        // The majority of the function calls are asynchronus,
+        // meaning that they cannot return the result instantly.
+        // These methods therefore return a promise, which you can await.
+        balance = await tronWeb.trx.getBalance(dd.base58)
+        console.log({ balance })
     } else {
-      alert('no DiceWeb')
+        alert('no tronWeb')
     }
 
-    const address = tronWeb.address.fromPrivateKey(privateKey)
-
-    // The majority of the function calls are asynchronus,
-    // meaning that they cannot return the result instantly.
-    // These methods therefore return a promise, which you can await.
-    const balance = await tronWeb.trx.getBalance(address)
-    console.log({ balance })
-
     this.setState({
-      key: balance
+        tronWeb: tronWeb,
+        balance: balance,
     })
 
     // // You can also bind a `then` and `catch` method.
@@ -67,7 +67,7 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            {this.state.key}
+            balance : {this.state.balance}
           </a>
         </header>
       </div>
