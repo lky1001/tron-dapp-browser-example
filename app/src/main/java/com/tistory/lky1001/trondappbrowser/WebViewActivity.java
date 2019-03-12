@@ -55,7 +55,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.loadUrl("http://192.168.0.2:3000");
 
         // Bridge instance
-        webView.addJavascriptInterface(this, "tronWeb");
+        webView.addJavascriptInterface(new TronWeb(), "tronWeb");
     }
 
     @JavascriptInterface
